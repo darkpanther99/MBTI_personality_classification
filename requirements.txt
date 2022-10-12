@@ -2,3 +2,5 @@ pandas
 numpy
 matplotlib
 jupyter
+torch
+torchtext
