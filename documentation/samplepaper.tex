@@ -1,0 +1,102 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
+%
+\documentclass[runningheads]{llncs}
+%
+\usepackage{graphicx}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+
+\begin{document}
+%
+\title{Classification of Myers–Briggs Type Indicator personality types using Natural Language Processing}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Andor Kiss \and
+Dóra Bányai \and
+Milán Kriston \and
+Zoltán Kádár}
+%
+\authorrunning{Kiss et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Eötvös Loránd University}
+%
+\maketitle              % typeset the header of the contribution
+%
+
+%
+%
+%
+\section{Literature search}
+
+As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and three different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT and RoBERTa.
+
+\section{Individual contributions}
+
+\subsection{Andor Kiss - TXC54G}
+
+\begin{itemize}
+  \item Team leader tasks - Git repo, weekly report to supervisor, Google Docs, LaTeX template
+  \item Literature search
+  \item Data exploration
+  \item Data pipeline
+  \item GPT-2 training and evaluation
+\end{itemize}
+
+\subsection{Dóra Bányai - NEPTUN}
+
+\begin{itemize}
+  \item Literature search
+  \item Data exploration
+  \item RoBERTa
+\end{itemize}
+
+\subsection{Milán Kriston - NEPTUN}
+
+\begin{itemize}
+  \item Literature search
+  \item Data pipeline
+  \item BERT
+\end{itemize}
+
+\subsection{Zoltán Kádár - NEPTUN}
+
+\begin{itemize}
+  \item Literature search
+  \item Data exploration
+  \item LSTM-based baseline model
+\end{itemize}
+
+\section{Results}
+
+
+\begin{table}
+\caption{Table captions should be placed above the
+tables.}\label{tab1}
+\begin{tabular}{|l|l|l|}
+\hline
+Heading level &  Example & Font size and style\\
+\hline
+Title (centered) &  {\Large\bfseries Lecture Notes} & 14 point, bold\\
+1st-level heading &  {\large\bfseries 1 Introduction} & 12 point, bold\\
+2nd-level heading & {\bfseries 2.1 Printing Area} & 10 point, bold\\
+3rd-level heading & {\bfseries Run-in Heading in Bold.} Text follows & 10 point, bold\\
+4th-level heading & {\itshape Lowest Level Heading.} Text follows & 10 point, italic\\
+\hline
+\end{tabular}
+\end{table}
+
+\bibliographystyle{splncs04}
+\bibliography{bibliography}
+
+\end{document}
