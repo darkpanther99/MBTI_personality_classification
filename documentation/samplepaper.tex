@@ -83,18 +83,21 @@ As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the a
 \begin{table}
 \caption{Table captions should be placed above the
 tables.}\label{tab1}
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|l|l|l|l|}
 \hline
-Heading level &  Example & Font size and style\\
+Model & Accuracy & F1 score & Precision & Recall & Execution speed\\
 \hline
-Title (centered) &  {\Large\bfseries Lecture Notes} & 14 point, bold\\
-1st-level heading &  {\large\bfseries 1 Introduction} & 12 point, bold\\
-2nd-level heading & {\bfseries 2.1 Printing Area} & 10 point, bold\\
-3rd-level heading & {\bfseries Run-in Heading in Bold.} Text follows & 10 point, bold\\
-4th-level heading & {\itshape Lowest Level Heading.} Text follows & 10 point, italic\\
+GPT-2@cat@100 & 0.549 & 0.543 & 0.55 & 0.549 & -\\
+GPT-2@bin@100 & 0.524 & 0.516 & 0.540 & 0.524 & -\\
+GPT-2@cat@250 & 0.70 & 0.70 & 0.70 & 0.70 & - \\
+GPT-2@bin@250 & 0.69 & 0.6889 & 0.6945 & 0.69 & -\\
+\textbf{GPT-2@cat@500} & \textbf{0.837} & \textbf{0.838} & \textbf{0.84} & \textbf{0.837} & -\\
+GPT-2@bin@500 & 0.82 & 0.819 & 0.821 & 0.82 & -\\
 \hline
 \end{tabular}
 \end{table}
+
+Where cat represents the model having 16 different output possibilities corresponding to the 16 personality types with softmax output activation, bin represents the model having 4 binary classifiers as the output layer predicting each character in the MBTI type, and the number (100, 250, 500) representing the maximum sequence length the model was trained with.
 
 \bibliographystyle{splncs04}
 \bibliography{bibliography}
