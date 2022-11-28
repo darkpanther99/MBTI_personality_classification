@@ -16,7 +16,7 @@
 %
 \title{Classification of Myers–Briggs Type Indicator personality types using Natural Language Processing}
 %
-%\titlerunning{Abbreviated paper title}
+\titlerunning{MBTI classification with NLP}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
@@ -26,20 +26,13 @@ Milán Kriston \and
 Zoltán Kádár}
 %
 \authorrunning{Kiss et al.}
-% First names are abbreviated in the running head.
-% If there are more than two authors, 'et al.' is used.
-%
-\institute{Eötvös Loránd University}
-%
-\maketitle              % typeset the header of the contribution
-%
 
-%
-%
-%
+\institute{Eötvös Loránd University}
+
+\maketitle
 \section{Literature search}
 
-As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and three different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT and RoBERTa.
+As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and three different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT and RoBERTa. As the article about GPT-2 \cite{gpt2} shows, the architecture was pretrained in a self-supervised way to understand the language first, and later finetuned for specific tasks, which is the reason why we used it in this project, leveraging the potential of it to model the English language, and providing it with inputs and labels for our specific classification task. We are aware of the fact that GPT-2 is not the current state of the art model in OpenAI's series of language models, however due to computational costs, we did not want to use a too large model with several billion parameters like GPT-3 \cite{gpt-3} or GPT-NEOX \cite{gpt-neox}. GPT-2 small was used with its 124 million parameters.
 
 \section{Individual contributions}
 
@@ -81,23 +74,36 @@ As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the a
 
 
 \begin{table}
-\caption{Table captions should be placed above the
-tables.}\label{tab1}
+\caption{Evaluation results}\label{tab1}
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 Model & Accuracy & F1 score & Precision & Recall & Execution speed\\
 \hline
-GPT-2@cat@100 & 0.549 & 0.543 & 0.55 & 0.549 & -\\
-GPT-2@bin@100 & 0.524 & 0.516 & 0.540 & 0.524 & -\\
-GPT-2@cat@250 & 0.70 & 0.70 & 0.70 & 0.70 & - \\
-GPT-2@bin@250 & 0.69 & 0.6889 & 0.6945 & 0.69 & -\\
-\textbf{GPT-2@cat@500} & \textbf{0.837} & \textbf{0.838} & \textbf{0.84} & \textbf{0.837} & -\\
-GPT-2@bin@500 & 0.82 & 0.819 & 0.821 & 0.82 & -\\
+GPT-2@cat@100 & 0.549 & 0.543 & 0.55 & 0.549 & 0.0467\\
+GPT-2@bin@100 & 0.524 & 0.516 & 0.540 & 0.524 & \textbf{0.0324}\\
+GPT-2@cat@250 & 0.70 & 0.70 & 0.70 & 0.70 & 0.0479 \\
+GPT-2@bin@250 & 0.69 & 0.6889 & 0.6945 & 0.69 & 0.0577\\
+\textbf{GPT-2@cat@500} & \textbf{0.837} & \textbf{0.838} & \textbf{0.84} & \textbf{0.837} & 0.067\\
+GPT-2@bin@500 & 0.82 & 0.819 & 0.821 & 0.82 & 0.0831\\
 \hline
 \end{tabular}
 \end{table}
 
-Where cat represents the model having 16 different output possibilities corresponding to the 16 personality types with softmax output activation, bin represents the model having 4 binary classifiers as the output layer predicting each character in the MBTI type, and the number (100, 250, 500) representing the maximum sequence length the model was trained with.
+In Table \ref{tab1} cat represents the model having 16 different output possibilities corresponding to the 16 personality types with softmax output activation, bin represents the model having 4 binary classifiers as the output layer predicting each character in the MBTI type, and the number (100, 250, 500) represents the maximum sequence length the model was trained with. The execution speed column indicates how quickly a batch is processed by the model in seconds. It was measured on an NVIDIA P100 GPU during inference. 
+
+In paper \cite{MBTI_class} the models had 4 binary classifiers as output, thus showing the metrics separately for each character in the MBTI type, however since in this project we used both categorical and binary outputs, a fairer comparison is done by converting the binary outputs to categorical with some postprocessing steps and calculating the error using that format.
+
+As the table shows, the sequence length of 500 was the best performing by far, while the categorical outputs outperformed the binary outputs by a small margin. Compared to the difference in performance, the difference between the models in terms of execution speed was negligible.
+
+\section{Conclusion and Future work}
+
+\subsection{Conclusion}
+
+TODO - write something about the difficulties during the project
+
+\subsection{Future work}
+
+TODO
 
 \bibliographystyle{splncs04}
 \bibliography{bibliography}
