@@ -34,12 +34,14 @@ Zoltán Kádár}
 
 As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and three different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT and RoBERTa. As the article about GPT-2 \cite{gpt2} shows, the architecture was pretrained in a self-supervised way to understand the language first, and later finetuned for specific tasks, which is the reason why we used it in this project, leveraging the potential of it to model the English language, and providing it with inputs and labels for our specific classification task. We are aware of the fact that GPT-2 is not the current state of the art model in OpenAI's series of language models, however due to computational costs, we did not want to use a too large model with several billion parameters like GPT-3 \cite{gpt-3} or GPT-NEOX \cite{gpt-neox}. GPT-2 small was used with its 124 million parameters.
 
+Later, we discarded the LSTM base model due to difficulties of aligning with very complex Huggingface transformer based models and chosen another one, named Albert.
+
 \section{Individual contributions}
 
 \subsection{Andor Kiss - TXC54G}
 
 \begin{itemize}
-  \item Team leader tasks - Git repo, weekly report to supervisor, Google Docs, LaTeX template
+  \item Team leader tasks - git repo, weekly report to supervisor, Google Docs, LaTeX template
   \item Literature search
   \item Data exploration
   \item Data pipeline
@@ -62,12 +64,13 @@ As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the a
   \item BERT
 \end{itemize}
 
-\subsection{Zoltán Kádár - NEPTUN}
+\subsection{Zoltán Kádár - OTO3RC}
 
 \begin{itemize}
   \item Literature search
   \item Data exploration
-  \item LSTM-based baseline model
+  \item Albert model training and evaluation
+  \item (LSTM-based baseline model)
 \end{itemize}
 
 \section{Results}
@@ -86,12 +89,19 @@ GPT-2@bin@250 & 0.69 & 0.6889 & 0.6945 & 0.69 & 0.0577\\
 \textbf{GPT-2@cat@500} & \textbf{0.837} & \textbf{0.838} & \textbf{0.84} & \textbf{0.837} & 0.067\\
 GPT-2@bin@500 & 0.82 & 0.819 & 0.821 & 0.82 & 0.0831\\
 \hline
+Albert-v2@cat@100 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@bin@100 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@cat@250 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@bin@250 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@cat@500 & 0.888 & 0.888 & 0.889& 0.888 & 0.0132\\
+Albert-v2@bin@500 & TBD & TBD & TBD & TBD & TBD\\
+\hline
 \end{tabular}
 \end{table}
 
 In Table \ref{tab1} cat represents the model having 16 different output possibilities corresponding to the 16 personality types with softmax output activation, bin represents the model having 4 binary classifiers as the output layer predicting each character in the MBTI type, and the number (100, 250, 500) represents the maximum sequence length the model was trained with. The execution speed column indicates how quickly a batch is processed by the model in seconds. It was measured on an NVIDIA P100 GPU during inference. 
 
-In paper \cite{MBTI_class} the models had 4 binary classifiers as output, thus showing the metrics separately for each character in the MBTI type, however since in this project we used both categorical and binary outputs, a fairer comparison is done by converting the binary outputs to categorical with some postprocessing steps and calculating the error using that format.
+In paper \cite{MBTI_class} the models had 4 binary classifiers as output, thus showing the metrics separately for each character in the MBTI type, however since in this project we used both categorical and binary outputs, a fairer comparison is done by converting the binary outputs to categorical with some post-processing steps and calculating the error using that format.
 
 As the table shows, the sequence length of 500 was the best performing by far, while the categorical outputs outperformed the binary outputs by a small margin. Compared to the difference in performance, the difference between the models in terms of execution speed was negligible.
 
@@ -100,6 +110,8 @@ As the table shows, the sequence length of 500 was the best performing by far, w
 \subsection{Conclusion}
 
 TODO - write something about the difficulties during the project
+
+The main difficulty with the these transformer models are the training time and model size. So base models were used, which is the least parameter heavy. With the lack of appropriate hardware, used the 30 hours weekly training time of Kaggle and localy Geforce 1070 Ti GTX with 8 gigs of RAM. In some cases the batch size needed to be downscaled to 4 as the RAM for local training was not enough to server the models
 
 \subsection{Future work}
 
