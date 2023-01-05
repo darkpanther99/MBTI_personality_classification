@@ -32,9 +32,7 @@ Zoltán Kádár}
 \maketitle
 \section{Literature search}
 
-As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and three different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT and RoBERTa. As the article about GPT-2 \cite{gpt2} shows, the architecture was pretrained in a self-supervised way to understand the language first, and later finetuned for specific tasks, which is the reason why we used it in this project, leveraging the potential of it to model the English language, and providing it with inputs and labels for our specific classification task. We are aware of the fact that GPT-2 is not the current state of the art model in OpenAI's series of language models, however due to computational costs, we did not want to use a too large model with several billion parameters like GPT-3 \cite{gpt-3} or GPT-NEOX \cite{gpt-neox}. GPT-2 small was used with its 124 million parameters.
-
-Later, we discarded the LSTM base model due to difficulties of aligning with very complex Huggingface transformer based models and chosen another one, named Albert.
+As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and four different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT, RoBERTa and Albert. As the article about GPT-2 \cite{gpt2} shows, the architecture was pretrained in a self-supervised way to understand the language first, and later finetuned for specific tasks, which is the reason why we used it in this project, leveraging the potential of it to model the English language, and providing it with inputs and labels for our specific classification task. We are aware of the fact that GPT-2 is not the current state of the art model in OpenAI's series of language models, however due to computational costs, we did not want to use a too large model with several billion parameters like GPT-3 \cite{gpt-3} or GPT-NEOX \cite{gpt-neox}. GPT-2 small was used with its 124 million parameters.
 
 \section{Individual contributions}
 
@@ -89,12 +87,12 @@ GPT-2@bin@250 & 0.69 & 0.6889 & 0.6945 & 0.69 & 0.0577\\
 \textbf{GPT-2@cat@500} & \textbf{0.837} & \textbf{0.838} & \textbf{0.84} & \textbf{0.837} & 0.067\\
 GPT-2@bin@500 & 0.82 & 0.819 & 0.821 & 0.82 & 0.0831\\
 \hline
-Albert-v2@cat@100 & TBD & TBD & TBD & TBD & TBD\\
-Albert-v2@bin@100 & TBD & TBD & TBD & TBD & TBD\\
-Albert-v2@cat@250 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@cat@100 & 0.544 & 0.538 & 0.550 & 0.544 & 0.0146 \\
+Albert-v2@bin@100 & TBD & TBD & TBD & TBD & TBD \\
+Albert-v2@cat@250 & 0.681 & 0.678 & 0.691 & 0.681 & 00.136 \\
 Albert-v2@bin@250 & TBD & TBD & TBD & TBD & TBD\\
-Albert-v2@cat@500 & 0.888 & 0.888 & 0.889& 0.888 & 0.0132\\
-Albert-v2@bin@500 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@cat@500 & \textbf{0.888} & \textbf{0.888} & \textbf{0.889} & \textbf{0.888} & \textbf{0.0132} \\
+Albert-v2@bin@500 & 0.841 & 0.802 & 0.803 & 0.804 & 0.0142\\
 \hline
 \end{tabular}
 \end{table}
@@ -111,7 +109,12 @@ As the table shows, the sequence length of 500 was the best performing by far, w
 
 TODO - write something about the difficulties during the project
 
-The main difficulty with the these transformer models are the training time and model size. So base models were used, which is the least parameter heavy. With the lack of appropriate hardware, used the 30 hours weekly training time of Kaggle and localy Geforce 1070 Ti GTX with 8 gigs of RAM. In some cases the batch size needed to be downscaled to 4 as the RAM for local training was not enough to server the models
+
+The main difficulty with the these transformer models are the training time and model size. So base models were used, which is the least parameter heavy. With the lack of appropriate hardware, used the 30 hours weekly training time of Kaggle and Geforce 1070 Ti GTX locally with 8 gigs of RAM. In some cases the batch size needed to be downscaled to 4 as the RAM for local training was not enough to serve the models.
+
+Albert model difficulties - Event though all of the transformer models used are conforming with the HuggingFace transoformer library, there are small differences which can make comparison and the ability to use a common base code difficult. Fox example GPT-2 doesn't had an activation function at the end of the transformer model, but Albert had a tanh based one, so the same code implemented in the binary classifier in the torch module needed to be adjusted. Luckily there were option no . This small differences made a lot of hours extra troubleshooting and documentation reading necessary.
+
+Baseline model difficulties - We tried to use a very simple baseline model, it suffered similar issues as Albert, but on a higher degree. HuggingFace has a well defined. As the main task described to work on cutting edge, it could be discarded as transformer based models focused on.
 
 \subsection{Future work}
 
