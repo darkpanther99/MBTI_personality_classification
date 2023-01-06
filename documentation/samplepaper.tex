@@ -5,6 +5,7 @@
 \documentclass[runningheads]{llncs}
 %
 \usepackage{graphicx}
+\usepackage{placeins}
 % Used for displaying a sample figure. If possible, figure files should
 % be included in EPS format.
 %
@@ -32,7 +33,18 @@ Zoltán Kádár}
 \maketitle
 \section{Literature search}
 
-As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use an LSTM-based baseline model and four different pretrained transformer architectures downloaded from huggingface, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} BERT, RoBERTa and Albert. As the article about GPT-2 \cite{gpt2} shows, the architecture was pretrained in a self-supervised way to understand the language first, and later finetuned for specific tasks, which is the reason why we used it in this project, leveraging the potential of it to model the English language, and providing it with inputs and labels for our specific classification task. We are aware of the fact that GPT-2 is not the current state of the art model in OpenAI's series of language models, however due to computational costs, we did not want to use a too large model with several billion parameters like GPT-3 \cite{gpt-3} or GPT-NEOX \cite{gpt-neox}. GPT-2 small was used with its 124 million parameters.
+As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the art models for text classification are transformer based architectures. Our idea was to use several different pretrained transformer architectures downloaded from HuggingFace, namely Generative Pre-trained Transformer 2 (GPT-2) \cite{gpt2} Bidirectional Encoder Representations from Transformers (BERT) \cite{bert}, A Robustly Optimized BERT Pretraining Approach (RoBERTa) \cite{roBERTa} and A Lite BERT for Self-supervised Learning of Language Representations (Albert) \cite{Albert}.
+\newline
+As the article about GPT-2 \cite{gpt2} shows, the architecture was pretrained in a self-supervised way to understand the language first, and later finetuned for specific tasks, which is the reason why we used it in this project, leveraging the potential of it to model the English language, and providing it with inputs and labels for our specific classification task. We are aware of the fact that GPT-2 is not the current state of the art model in OpenAI's series of language models, however due to computational costs, we did not want to use a too large model with several billion parameters like GPT-3 \cite{gpt-3} or GPT-NEOX \cite{gpt-neox}. GPT-2 small was used with its 124 million parameters.
+\newline
+BERT was introduced by Google AI Language in \cite{bert}. In 2019, it was the best performing model in 11 NLP tasks.
+Just as GPT-2, BERT is also pretrained in a self-supervised manner while alleviating the usual LSTM based models' unidirectional constraint, by using Masked Language Modeling. Bert consists of 12 transformer blocks, 12 attention heads, and 110 million parameters, which is even less than the parameter amount of GPT-2.
+\newline
+RoBERTa \cite{roBERTa} is a variant of the BERT model developed by researchers at Facebook AI. Similar to BERT, RoBERTa is a transformer-based model that is trained to perform natural language processing tasks such as language translation and text classification. However, RoBERTa was designed to be more robust and efficient than BERT by making several improvements to the original model. RoBERTa was trained on a much larger dataset than BERT, which included a combination of publicly available datasets and internal data from Facebook. This larger training dataset allowed RoBERTa to learn more about the structure and patterns of natural language, leading to improved performance on a variety of tasks.  
+\newline
+\newline
+Albert \cite{Albert} was published by members of the Google Research team, similar to BERT. Usually increasing the parameter space in language models result in improved performance, however the computational costs increase with it as well. With Albert, the goal was to introduce parameter reduction techniques to lower the size and compute requirements of a BERT-like language model while not performing worse on downstream NLP tasks. The Albert model we used had 12 million parameters, almost 90\% less than the original BERT.
+
 
 \section{Individual contributions}
 
@@ -46,20 +58,20 @@ As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the a
   \item GPT-2 training and evaluation
 \end{itemize}
 
-\subsection{Dóra Bányai - NEPTUN}
+\subsection{Dóra Bányai - W5H8NT}
 
 \begin{itemize}
   \item Literature search
   \item Data exploration
-  \item RoBERTa
+  \item RoBERTa training and evaluation
 \end{itemize}
 
-\subsection{Milán Kriston - NEPTUN}
+\subsection{Milán Kriston - Z3M7ZI}
 
 \begin{itemize}
   \item Literature search
   \item Data pipeline
-  \item BERT
+  \item BERT training and evaluation
 \end{itemize}
 
 \subsection{Zoltán Kádár - OTO3RC}
@@ -71,56 +83,60 @@ As indicated in papers \cite{DL_text_class} \cite{MBTI_class} the state of the a
   \item (LSTM-based baseline model)
 \end{itemize}
 
+
+\pagebreak
 \section{Results}
 
-
 \begin{table}
+\centering
 \caption{Evaluation results}\label{tab1}
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 Model & Accuracy & F1 score & Precision & Recall & Execution speed\\
 \hline
 GPT-2@cat@100 & 0.549 & 0.543 & 0.55 & 0.549 & 0.0467\\
-GPT-2@bin@100 & 0.524 & 0.516 & 0.540 & 0.524 & \textbf{0.0324}\\
+GPT-2@bin@100 & 0.524 & 0.516 & 0.540 & 0.524 & 0.0324\\
 GPT-2@cat@250 & 0.70 & 0.70 & 0.70 & 0.70 & 0.0479 \\
 GPT-2@bin@250 & 0.69 & 0.6889 & 0.6945 & 0.69 & 0.0577\\
-\textbf{GPT-2@cat@500} & \textbf{0.837} & \textbf{0.838} & \textbf{0.84} & \textbf{0.837} & 0.067\\
+GPT-2@cat@500 & 0.837 & 0.838 & 0.84 & 0.837 & 0.067\\
 GPT-2@bin@500 & 0.82 & 0.819 & 0.821 & 0.82 & 0.0831\\
-\hline
+BERT-2@cat@500 & 0.778 & 0.779 & 0.783 & 0.778 & 0.161 \\
+BERT-2@bin@500 &  0.620 & 0.615 & 0.628 & 0.69 & 0.620\\
+RoBERTa@cat@500 & 0.799 & 0.8 & 0.817 & 0.799 & 0.161 \\
+RoBERTa@bin@500 &  0.674 & 0.671 & 0.686 & 0.674 & 0.620\\
 Albert-v2@cat@100 & 0.544 & 0.538 & 0.550 & 0.544 & 0.0146 \\
-Albert-v2@bin@100 & TBD & TBD & TBD & TBD & TBD \\
-Albert-v2@cat@250 & 0.681 & 0.678 & 0.691 & 0.681 & 00.136 \\
-Albert-v2@bin@250 & TBD & TBD & TBD & TBD & TBD\\
+Albert-v2@cat@250 & 0.681 & 0.678 & 0.691 & 0.681 & 0.136 \\
 Albert-v2@cat@500 & \textbf{0.888} & \textbf{0.888} & \textbf{0.889} & \textbf{0.888} & \textbf{0.0132} \\
 Albert-v2@bin@500 & 0.841 & 0.802 & 0.803 & 0.804 & 0.0142\\
 \hline
 \end{tabular}
 \end{table}
 
+\FloatBarrier
+
 In Table \ref{tab1} cat represents the model having 16 different output possibilities corresponding to the 16 personality types with softmax output activation, bin represents the model having 4 binary classifiers as the output layer predicting each character in the MBTI type, and the number (100, 250, 500) represents the maximum sequence length the model was trained with. The execution speed column indicates how quickly a batch is processed by the model in seconds. It was measured on an NVIDIA P100 GPU during inference. 
 
 In paper \cite{MBTI_class} the models had 4 binary classifiers as output, thus showing the metrics separately for each character in the MBTI type, however since in this project we used both categorical and binary outputs, a fairer comparison is done by converting the binary outputs to categorical with some post-processing steps and calculating the error using that format.
 
 As the table shows, the sequence length of 500 was the best performing by far, while the categorical outputs outperformed the binary outputs by a small margin. Compared to the difference in performance, the difference between the models in terms of execution speed was negligible.
+As for the BERT and RoBERTa models, we didn't feel the need to experiment with the sequence lengths, since it was proven with GPT-2 and Albert that models with the length of 500 perform the best. As Google Colaboratory doesn't share what kind of GPU it is using, inference times are hard to compare. In the case of BERT, the performance between the binary and categorical output models was more significant than with GPT-2. The reason for such big differences could be further investigated in the future. It is also worth mentioning that because of the limited resources, the BERT models were only trained for 4 epochs. RoBERTa performed slightly better than BERT in both binary and categorical output cases. This is possible because RoBERTa was trained using a different optimization procedure than BERT, which involved using a dynamic learning rate scheduler and larger batch sizes, allowing it to learn more quickly and efficiently.
 
 \section{Conclusion and Future work}
 
 \subsection{Conclusion}
 
-TODO - write something about the difficulties during the project
+The project was exciting where we gained a lot of knowledge regarding state of the art NLP models, their architectures and their applications, and we applied this newly acquired knowledge to an interesting practical task.
 
+For every model, we used Kaggle, however the biggest difficulty creating the solution with the BERT model, is that HuggingFace's transformer library was not working properly with that particular model, so it had to be trained using Google Colaboratory. Another significant obstacle was that nearly all models that we were using were quite computationally heavy, with hundreds of millions of parameters. Approximately a single epoch took 2 hours (depending on model and environment) which made the training phase slow. To alleviate this inconvenience with the training, for every architecture, the base models were used, which are the least parameter heavy. Because of the lack of appropriate hardware, we had to use the 30 hours free weekly training time provided by Kaggle and a local NVIDIA GeForce GTX 1070 Ti with 8GB of VRAM. In some cases the batch size needed to be downscaled to 4 as the memory of the local training environment was not enough to serve the models.
 
-The main difficulty with the these transformer models are the training time and model size. So base models were used, which is the least parameter heavy. With the lack of appropriate hardware, used the 30 hours weekly training time of Kaggle and Geforce 1070 Ti GTX locally with 8 gigs of RAM. In some cases the batch size needed to be downscaled to 4 as the RAM for local training was not enough to serve the models.
-
-Albert model difficulties - Event though all of the transformer models used are conforming with the HuggingFace transoformer library, there are small differences which can make comparison and the ability to use a common base code difficult. Fox example GPT-2 doesn't had an activation function at the end of the transformer model, but Albert had a tanh based one, so the same code implemented in the binary classifier in the torch module needed to be adjusted. Luckily there were option no . This small differences made a lot of hours extra troubleshooting and documentation reading necessary.
-
-Baseline model difficulties - We tried to use a very simple baseline model, it suffered similar issues as Albert, but on a higher degree. HuggingFace has a well defined. As the main task described to work on cutting edge, it could be discarded as transformer based models focused on.
+Even though all of the transformer models used are conforming with the HuggingFace transformer library, there are small differences which can make comparison and the ability to use a common base code difficult. For example GPT-2 doesn't have an activation function at the end of the transformer model, but Albert has a tanh based one, which made adjusting the architecture for a common training/testing loop a bit more inconvenient. We also tried to use a very simple LSTM-based baseline model, it suffered similar issues as Albert, but on a higher degree. Since HuggingFace has a well defined API and as the main task was to work with state of the art models, the baseline idea was discarded so we can focus more on the transformers.
 
 \subsection{Future work}
 
-TODO
+Every model, especially the BERT could be further trained. With the BERT model the losses were still decreasing after 4 epochs, but the compute cost of Google Colaboratory made it hard to train. Furthermore every model could be enhanced with more hyper-parameter tuning.
 
 \bibliographystyle{splncs04}
 \bibliography{bibliography}
+
 
 \end{document}
