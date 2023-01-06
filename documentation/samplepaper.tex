@@ -6,12 +6,21 @@
 %
 \usepackage{graphicx}
 \usepackage{placeins}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    citecolor=black,
+    urlcolor=cyan,
+    pdfpagemode=FullScreen,
+    }
 % Used for displaying a sample figure. If possible, figure files should
 % be included in EPS format.
 %
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
-% \renewcommand\UrlFont{\color{blue}\rmfamily}
+%\renewcommand\UrlFont{\color{blue}\rmfamily}
 
 \begin{document}
 %
@@ -134,6 +143,10 @@ Even though all of the transformer models used are conforming with the HuggingFa
 \subsection{Future work}
 
 Every model, especially the BERT could be further trained. With the BERT model the losses were still decreasing after 4 epochs, but the compute cost of Google Colaboratory made it hard to train. Furthermore every model could be enhanced with more hyper-parameter tuning.
+
+\subsection{Git repository}
+
+The source code of this project can be found here: \href{https://github.com/darkpanther99/MBTI_personality_classification}{git repository}
 
 \bibliographystyle{splncs04}
 \bibliography{bibliography}
